@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\jspac\go\bin\kompose.exe convert
+    kompose.version: 1.28.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: frontend
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: frontend
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\jspac\go\bin\kompose.exe convert
+        kompose.version: 1.28.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/cloudcomputingfinal-main-db: "true"
+        io.kompose.service: frontend
+    spec:
+      containers:
+        - env:
+            - name: VITE_API_KEY
+              value: http://backendapi:80
+          image: frontendapi:latest
+          name: frontendapi
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}
